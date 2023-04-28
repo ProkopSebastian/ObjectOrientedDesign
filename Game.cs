@@ -18,7 +18,6 @@ namespace projob_Projekt
         public List<IMod> mods { get; }
         public string devices { get; }
 
-
         public Game(string name, string genre, string devices)
         {
             this.name = name;
@@ -140,18 +139,17 @@ namespace projob_Projekt
         {
             get => _game4.Reviews.Select(g => new AdapterFromReview4(g)).Cast<IReview>().ToList();
         }
-        public List<IMod> mods // co sie zmienia jesli tu zaimplementuje Mod zamiast IMod
+        public List<IMod> mods 
         {
             get => _game4.Mods.Select(mod => new AdapterFromModRep4(mod)).Cast<IMod>().ToList();
         }
         public void wypisz()
         {
-            // Czy to na pewno dobrze, ze tak to robie?
+            // Czy to na pewno taka implementacja jest zgodna z poleceniem i oczekiwaniami?
             Console.WriteLine($"Gra - {name}, z gatunku {genre}, \n" +
             $"autorzy: {string.Join(", ", this.authors)}\n" +
             $"recenzje: {string.Join(", ", reviews)}, \n" +
             $"mody: {string.Join(", ", mods)}, \nna platformy: {devices} \n");
         }
-
     }
 }
