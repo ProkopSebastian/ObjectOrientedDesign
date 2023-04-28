@@ -59,7 +59,7 @@ namespace projob_Projekt
                     row++;
             }
             else
-                col++; // tutaj zmieniałem
+                col++; // tutaj zmieniałem coś
 
             count++;
         }
