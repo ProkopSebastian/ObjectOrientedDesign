@@ -22,7 +22,8 @@ namespace projob_Projekt
             IteratorTest3();
             Console.WriteLine("-----Count if -----------");
             IteratorTest4();
-            Console.WriteLine("-------KONIEC----------");
+            Console.WriteLine("-------Wywołanie kosoli----------");
+            console DialogUser = new console();
         }
 
         // Funkcje do wypisywania:
