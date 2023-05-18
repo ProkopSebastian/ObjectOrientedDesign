@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace projob_Projekt
+namespace projob_Projekt.ElementsOfGamestore
 {
     // Reprezentacja podstawowa
     public class Mod : IMod // jesli juz mam gettery to chyba mozna wywalic to public tylko trzeba by to zrobic juz wszedzie 

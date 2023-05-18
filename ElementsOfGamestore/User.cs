@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace projob_Projekt
+namespace projob_Projekt.ElementsOfGamestore
 {
     // Reprezentacja podstawowa
     public class User : IUser
@@ -16,7 +16,7 @@ namespace projob_Projekt
         public User(string nickname)
         {
             this.nickname = nickname;
-            this.ownedGames = new List<IGame> ();
+            ownedGames = new List<IGame>();
         }
         public override string ToString()
         {
@@ -36,7 +36,7 @@ namespace projob_Projekt
             SetNickname(nickname);
             OwnedGames = ownedGames!;
         }
-        
+
         public string GetString(int i)
         {
             return _myHashMap[i];
