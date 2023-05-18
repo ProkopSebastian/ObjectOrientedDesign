@@ -9,8 +9,9 @@ namespace projob_Projekt
     public class console
     {
         private static Dictionary<string, Action<string[]>> commandDictionary;
+        public GameStore storeMain; // reference to GameStore prepared in main
 
-        public console()
+        public console(GameStore store)
         {
             // Initialize the command dictionary
             commandDictionary = new Dictionary<string, Action<string[]>>
@@ -20,7 +21,7 @@ namespace projob_Projekt
                 { "add", AddCommand },
                 { "exit", ExitCommand }
             };
-
+            this.storeMain = store;
             string command;
             do
             {
@@ -28,6 +29,7 @@ namespace projob_Projekt
                 command = Console.ReadLine();
                 ProcessCommand(command);
             } while (command != "exit");
+
         }
 
         private static void ProcessCommand(string command)
@@ -52,7 +54,7 @@ namespace projob_Projekt
             }
         }
 
-        private static void ListCommand(string[] args)
+        private void ListCommand(string[] args)
         {
             if (args.Length < 1)
             {
@@ -60,13 +62,12 @@ namespace projob_Projekt
                 return;
             }
 
-            // Perform the logic for the list command
             string className = args[0];
-            // ...
 
             Console.WriteLine($"Executing list command for class '{className}'");
             // Your code to list objects of the specified class
             // ...
+            storeMain.print(className);
         }
 
         private static void FindCommand(string[] args)
