@@ -23,7 +23,9 @@ namespace projob_Projekt
             Console.WriteLine("-----Count if -----------");
             IteratorTest4();
             Console.WriteLine("-------Wywołanie kosoli----------");
-            console DialogUser = new console();
+            GameStore gameStore = new GameStore();
+            gameStore.fill(); // Wypełnij przykładowymi wartosciami 
+            console DialogUser = new console(gameStore);
         }
 
         // Funkcje do wypisywania:

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,12 +13,57 @@ namespace projob_Projekt
         public IUser[] users;
         public IReview[] reviews;
         public IMod[] mods;
+
+        private static Dictionary<string, Action> listDictionary;
         public GameStore()
         {
-            this.games = new IGame[5];
+            this.games = new IGame[10];
             this.users = new IUser[8];
             this.reviews = new IReview[5];
             this.mods = new IMod[8];
+
+            // Initialize the command dictionary
+            listDictionary = new Dictionary<string, Action>
+            {
+                { "game", ListGame },
+                { "mod", ListMod },
+                { "user", ListUser},
+                { "review", ListReview}
+            };
+        }
+
+        public void print(string klasa)
+        {
+            listDictionary[klasa].Invoke();
+        }
+        private void ListReview()
+        {
+            foreach(var rev in reviews)
+            {
+                if(rev!= null)
+                    Console.WriteLine(rev);
+            }
+        }
+
+        private void ListUser()
+        {
+            foreach(var use in users)
+            {
+                Console.WriteLine(use);
+            }    
+        }
+
+        private void ListMod()
+        {
+            foreach (var mod in mods)
+            { Console.WriteLine(mod); }
+        }
+
+        private void ListGame()
+        {
+            foreach (var gam in games)
+                if (gam != null)
+                    gam.wypisz();
         }
 
         // Inicjalizacja przykładowych wartości w reprezentacji podstawowej
@@ -120,9 +166,17 @@ namespace projob_Projekt
             games[1] = new AdapterGameFromRep4(g2);            
         }
 
-        public void print()
-        {
-            foreach (var us in games) { if (us != null) us.wypisz(); }
-        }
+        //public void print()
+        //{
+        //    foreach (var us in games) { if (us != null) us.wypisz(); }
+        //}
+        //public void list_games()
+        //{
+        //    foreach (var game in games)
+        //    {
+        //        game.wypisz();
+        //    }
+        //}
+
     }
 }
