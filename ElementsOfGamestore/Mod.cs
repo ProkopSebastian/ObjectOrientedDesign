@@ -14,7 +14,7 @@ namespace projob_Projekt.ElementsOfGamestore
         public string description { get; }
         public List<IUser> authors { get; }
 
-        public Mod(string name, string description, List<IUser> authors)
+        public Mod(string name, string description, List<IUser> authors = null)
         {
             this.name = name;
             this.description = description;
@@ -22,7 +22,15 @@ namespace projob_Projekt.ElementsOfGamestore
         }
         public override string ToString()
         {
-            return description;
+            return name + ", opis: " + description;
+        }
+        public static Dictionary<string, object> GetAvailableFields()
+        {
+            return new Dictionary<string, object>
+            {
+                { "name", default(string) },
+                { "description", default(string) },
+            };
         }
     }
 

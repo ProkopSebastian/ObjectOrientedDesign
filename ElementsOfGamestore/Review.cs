@@ -14,7 +14,7 @@ namespace projob_Projekt.ElementsOfGamestore
         public int rating { get; }
         public IUser author { get; set; }
 
-        public Review(string text, int rating, IUser author)
+        public Review(string text, int rating, IUser author=null)
         {
             this.text = text;
             this.rating = rating;
@@ -23,6 +23,14 @@ namespace projob_Projekt.ElementsOfGamestore
         public override string ToString()
         {
             return text;
+        }
+        public static Dictionary<string, object> GetAvailableFields()
+        {
+            return new Dictionary<string, object>
+            {
+                { "text", default(string) },
+                { "rating", default(int) }
+            };
         }
     }
 

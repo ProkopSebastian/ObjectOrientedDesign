@@ -23,6 +23,13 @@ namespace projob_Projekt.ElementsOfGamestore
             return nickname;
             // return "Tu dziala"; // -- tu faktycznie działa
         }
+        public static Dictionary<string, object> GetAvailableFields()
+        {
+            return new Dictionary<string, object>
+            {
+                { "nickname", default(string) }
+            };
+        }
     }
 
     // Repreentacja alternatywna

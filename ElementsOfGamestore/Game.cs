@@ -17,6 +17,7 @@ namespace projob_Projekt.ElementsOfGamestore
         public List<IMod> mods { get; }
         public string devices { get; }
 
+
         public Game(string name, string genre, string devices)
         {
             this.name = name;
@@ -32,6 +33,15 @@ namespace projob_Projekt.ElementsOfGamestore
                 $"autorzy: {string.Join(", ", authors)}\n" +
                 $"recenzje: {string.Join(", ", reviews)}, \n" +
                 $"mody: {string.Join(", ", mods)}, \nna platformy: {devices} \n");
+        }
+        public static Dictionary<string, object> GetAvailableFields()
+        {
+            return new Dictionary<string, object>
+            {
+                { "name", default(string) },
+                { "genre", default(string) },
+                { "devices", default(string) }
+            };
         }
     }
 
