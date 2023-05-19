@@ -1,12 +1,11 @@
-﻿using projob_Projekt;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace projob_Projekt
+namespace projob_Projekt.ElementsOfGamestore
 {
     // Reprezentacja podstawowa
     public class Game : IGame
@@ -17,6 +16,7 @@ namespace projob_Projekt
         public List<IReview> reviews { get; }
         public List<IMod> mods { get; }
         public string devices { get; }
+
 
         public Game(string name, string genre, string devices)
         {
@@ -30,9 +30,18 @@ namespace projob_Projekt
         public void wypisz()
         {
             Console.WriteLine($"Gra - {name}, z gatunku {genre}, \n" +
-                $"autorzy: {string.Join(", ", this.authors)}\n" + 
+                $"autorzy: {string.Join(", ", authors)}\n" +
                 $"recenzje: {string.Join(", ", reviews)}, \n" +
                 $"mody: {string.Join(", ", mods)}, \nna platformy: {devices} \n");
+        }
+        public static Dictionary<string, object> GetAvailableFields()
+        {
+            return new Dictionary<string, object>
+            {
+                { "name", default(string) },
+                { "genre", default(string) },
+                { "devices", default(string) }
+            };
         }
     }
 
@@ -117,8 +126,8 @@ namespace projob_Projekt
         {
             _game4 = game4;
         }
-        public string name 
-        { 
+        public string name
+        {
             get => _game4.GetString(_game4.GetName()); // bo GetName zwraca prywatnego int-a odpowiadającego stringowi name
             set => _game4.SetName(value);
         }
@@ -139,7 +148,7 @@ namespace projob_Projekt
         {
             get => _game4.Reviews.Select(g => new AdapterFromReview4(g)).Cast<IReview>().ToList();
         }
-        public List<IMod> mods 
+        public List<IMod> mods
         {
             get => _game4.Mods.Select(mod => new AdapterFromModRep4(mod)).Cast<IMod>().ToList();
         }
@@ -147,7 +156,7 @@ namespace projob_Projekt
         {
             // Czy to na pewno taka implementacja jest zgodna z poleceniem i oczekiwaniami?
             Console.WriteLine($"Gra - {name}, z gatunku {genre}, \n" +
-            $"autorzy: {string.Join(", ", this.authors)}\n" +
+            $"autorzy: {string.Join(", ", authors)}\n" +
             $"recenzje: {string.Join(", ", reviews)}, \n" +
             $"mody: {string.Join(", ", mods)}, \nna platformy: {devices} \n");
         }

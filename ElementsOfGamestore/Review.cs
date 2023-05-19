@@ -1,12 +1,11 @@
-﻿using projob_Projekt;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace projob_Projekt
+namespace projob_Projekt.ElementsOfGamestore
 {
     // Reprezentacja podstawowa
     public class Review : IReview
@@ -15,7 +14,7 @@ namespace projob_Projekt
         public int rating { get; }
         public IUser author { get; set; }
 
-        public Review(string text, int rating, IUser author)
+        public Review(string text, int rating, IUser author=null)
         {
             this.text = text;
             this.rating = rating;
@@ -24,6 +23,14 @@ namespace projob_Projekt
         public override string ToString()
         {
             return text;
+        }
+        public static Dictionary<string, object> GetAvailableFields()
+        {
+            return new Dictionary<string, object>
+            {
+                { "text", default(string) },
+                { "rating", default(int) }
+            };
         }
     }
 

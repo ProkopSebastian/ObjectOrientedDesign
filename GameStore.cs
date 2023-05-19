@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using projob_Projekt.ElementsOfGamestore;
 
 namespace projob_Projekt
 {
@@ -30,6 +31,35 @@ namespace projob_Projekt
                 { "user", ListUser},
                 { "review", ListReview}
             };
+        }
+
+        public void AddGame(IGame game)
+        {
+            // find first null in game array
+            int idx = 0;
+            while (games[idx]!=null && idx<games.Length) { idx++; }
+            games[idx] = game;
+        }
+        public void AddMod(IMod mod)
+        {
+            // find first null in game array
+            int idx = 0;
+            while (mods[idx] != null && idx < mods.Length) { idx++; }
+            mods[idx] = mod;
+        }
+        public void AddReview(IReview rev)
+        {
+            // find first null in game array
+            int idx = 0;
+            while (reviews[idx] != null && idx < reviews.Length) { idx++; }
+            reviews[idx] = rev;
+        }
+        public void AddUser(IUser user)
+        {
+            // find first null in game array
+            int idx = 0;
+            while (users[idx] != null && idx < users.Length) { idx++; }
+            users[idx] = user;
         }
 
         public void print(string klasa)

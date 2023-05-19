@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace projob_Projekt
+namespace projob_Projekt.ElementsOfGamestore
 {
     // Reprezentacja podstawowa
     public class Mod : IMod // jesli juz mam gettery to chyba mozna wywalic to public tylko trzeba by to zrobic juz wszedzie 
@@ -14,7 +14,7 @@ namespace projob_Projekt
         public string description { get; }
         public List<IUser> authors { get; }
 
-        public Mod(string name, string description, List<IUser> authors)
+        public Mod(string name, string description, List<IUser> authors = null)
         {
             this.name = name;
             this.description = description;
@@ -22,7 +22,15 @@ namespace projob_Projekt
         }
         public override string ToString()
         {
-            return description;
+            return name + ", opis: " + description;
+        }
+        public static Dictionary<string, object> GetAvailableFields()
+        {
+            return new Dictionary<string, object>
+            {
+                { "name", default(string) },
+                { "description", default(string) },
+            };
         }
     }
 
