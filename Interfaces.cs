@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace projob_Projekt
 {
@@ -33,5 +35,11 @@ namespace projob_Projekt
     {
         string nickname { get; }
         List<IGame> ownedGames { get; } // wyrzucilem set 
+    }
+    public interface ICommand : ISerializable
+    {
+        void Execute();
+        void SerializeItem(string fileName, XmlSerializer serializer);
+        string ToString();
     }
 }
