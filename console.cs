@@ -264,43 +264,6 @@ namespace projob_Projekt
 
             commands[0].SerializeItem(fileName, serializer); // Serialize an instance of the class.
             Console.WriteLine("Done");
-            //if (args.Length < 1)
-            //{
-            //    Console.WriteLine("Usage: queue export {filename} [format]");
-            //    return;
-            //}
-
-            //string filename = args[0];
-            //string format = args.Length > 1 ? args[1].ToLower() : "xml";
-
-            //try
-            //{
-            //    if (format == "xml")
-            //    {
-            //        XmlSerializer serializer = new XmlSerializer(typeof(List<ICommand>), new Type[] { typeof(AddCommand), typeof(FindCommand) });
-            //        List<ICommand> commands = new List<ICommand>(); // Assuming you have a list of ICommand objects
-
-            //        // Add commands to the list
-
-            //        using (StreamWriter writer = new StreamWriter(filename))
-            //        {
-            //            serializer.Serialize(writer, commands);
-            //        }
-            //        Console.WriteLine("Commands successfully exported to XML file.");
-            //    }
-            //    else if (format == "plaintext")
-            //    {
-            //        // Export commands to plain text format
-            //    }
-            //    else
-            //    {
-            //        Console.WriteLine("Invalid format. Supported formats: XML, plaintext.");
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine("Error occurred while exporting commands: " + ex.Message);
-            //}
         }
 
 
