@@ -9,48 +9,42 @@ using System.Xml.Serialization;
 
 namespace projob_Projekt
 {
-    public class ListCommand : ICommand
+    [Serializable]
+    public class ListCommand : CommandAbst
     {
+        [XmlIgnore]
         private GameStore _store;
-        private string _className;
-        string[] args;
+        [XmlElement]
+        public string _className;
+        [XmlElement]
+        public string[] args;
         public ListCommand(GameStore _gameStore, string _className, string[] args)
         {
             this._store = _gameStore;
             this._className = _className;
             this.args = args;
         }
-        public void Execute() // This must be public to implement Interface Command
+        public ListCommand() { }
+        public override void Execute()
         {
             _store.print(_className);
         }
-
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SerializeItem(string fileName, XmlSerializer serializer)
-        {
-            using (FileStream fileStream = new FileStream(fileName, FileMode.Create))
-            {
-                serializer.Serialize(fileStream, _store);
-                serializer.Serialize(fileStream, _className);
-            }
-        }
-
         public override string ToString() // It bothers me that from very beginning there are 2 references to this
         {
             return ($"List {_className}");
         }
     }
-    public class AddCommand : ICommand
+    [Serializable]
+    public class AddCommand : CommandAbst
     {
-
+        [XmlIgnore]
         private GameStore storeMain;
-        private string className;
-        private object[] tab;
-        private string representation;
+        [XmlElement]
+        public string className;
+        [XmlElement]
+        public object[] tab;
+        [XmlElement]
+        public string representation;
         public AddCommand(GameStore store, string className, string representation, object[] args)
         {
             this.storeMain = store;
@@ -58,8 +52,9 @@ namespace projob_Projekt
             this.tab = args;
             this.representation = representation;
         }
+        public AddCommand() { } // Parameterless constructor needed for serialization
 
-        public void Execute()
+        public override void Execute()
         {
             Console.WriteLine("executing AddCommand");
             // GAME
@@ -111,62 +106,34 @@ namespace projob_Projekt
                 storeMain.AddReview(new AdapterFromReview4(nowa));
             }
         }
-
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SerializeItem(string fileName, XmlSerializer serializer)
-        {
-            using (FileStream fileStream = new FileStream(fileName, FileMode.Create))
-            {
-                serializer.Serialize(fileStream, storeMain);
-                serializer.Serialize(fileStream, className);
-                serializer.Serialize(fileStream, representation);
-                serializer.Serialize(fileStream, tab);
-            }
-        }
-
         public override string ToString() 
         {
             return ($"Add {className}. Arguments: {tab.ToString()}");
         }
     }
-    public class FindCommand : ICommand
+    [Serializable]
+    public class FindCommand : CommandAbst
     {
-        private string _className;
-        private string[] args;
-        private GameStore store;
+        [XmlElement]
+        public string _className { get; set; }
+        [XmlElement]
+        public string[] args { get; set; }
+        [XmlIgnore]
+        private GameStore store { get; set; } // nie wiem 
         public FindCommand(GameStore store, string className, string[] args)
         {
             _className = className;
             this.args = args;
             this.store = store;
         }
-        public void Execute()
+        public FindCommand() { } // Parameterless constructor to serialize
+        public override void Execute()
         {
             Console.WriteLine("Executing Find Command");
         }
-
-        public void SerializeItem(string fileName, XmlSerializer serializer)
-        {
-            using (FileStream fileStream = new FileStream(fileName, FileMode.Create))
-            {
-                serializer.Serialize(fileStream, _className);
-                serializer.Serialize(fileStream, args);
-            }
-        }
-
         public override string ToString() 
         {
             return ($"Find {_className}. Arguments: {args}");
         }
-
-        void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("className", _className);
-        }
     }
-
 }

@@ -42,4 +42,9 @@ namespace projob_Projekt
         void SerializeItem(string fileName, XmlSerializer serializer);
         string ToString();
     }
+    public abstract class CommandAbst
+    {
+        public abstract void Execute();
+        //public abstract void SerializeItem(string fileName, XmlSerializer serializer);
+    }
 }

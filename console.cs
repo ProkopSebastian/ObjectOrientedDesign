@@ -17,7 +17,7 @@ namespace projob_Projekt
         private static Dictionary<string, Action<string[]>> commandDictionary;
         private static Dictionary<string, Dictionary<string, object>> AvailableFields;
         public GameStore storeMain; // reference to GameStore prepared in main
-        private List<ICommand> commands;
+        private List<CommandAbst> commands;
 
         public console(GameStore store)
         {
@@ -42,7 +42,7 @@ namespace projob_Projekt
             };
 
             this.storeMain = store;
-            commands = new List<ICommand>();
+            commands = new List<CommandAbst>();
 
             // Main loop of application is in constructor which is probably not the best solution
             string command;
@@ -149,7 +149,7 @@ namespace projob_Projekt
             }
 
             Console.WriteLine($"Executing list command for class '{className}'");
-            ICommand command = new ListCommand(this.storeMain, className, args); // Arguments here make no sense though
+            CommandAbst command = new ListCommand(this.storeMain, className, args); // Arguments here make no sense though
             commands.Add(command);
             Console.WriteLine($"List command for {className} added to queue.");
             //storeMain.print(className);
@@ -171,7 +171,7 @@ namespace projob_Projekt
             Array.Copy(args, 1, commandArgs, 0, commandArgs.Length);
 
             Console.WriteLine($"Executing find command for class '{className}'");
-            ICommand command = new FindCommand(this.storeMain, className, args);
+            CommandAbst command = new FindCommand(this.storeMain, className, args);
             commands.Add(command);
             Console.WriteLine("Find command added to command queue");
         }
@@ -257,12 +257,17 @@ namespace projob_Projekt
         }
         private void QueueExport(string[] args)
         {
-            string fileName = "dataStuff.xml";
+            string fileName = "\"C:\\Users\\sebap\\Documents\\Studia\\sem_4\\Projob\\Projekt\\projob_Projekt\\XML_Files\\DataStuff.xml\"";
 
             // Use XmlSerializer to serialize and deserialize.
-            XmlSerializer serializer = new XmlSerializer(typeof(ICommand));
+            XmlSerializer serializer = new XmlSerializer(commands[0].GetType());
+            using (StreamWriter writer = new StreamWriter("C:\\Users\\sebap\\Downloads\\Data.xml"))
+            {
+                serializer.Serialize(writer, commands[0]);
+            }
 
-            commands[0].SerializeItem(fileName, serializer); // Serialize an instance of the class.
+            //commands[0].SerializeItem(fileName, serializer); // Serialize an instance of the class.
+
             Console.WriteLine("Done");
         }
 
