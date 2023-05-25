@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfCommandAbst xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <CommandAbst xsi:type="ListCommand">
+    <_className>mod</_className>
+    <args>mod</args>
+  </CommandAbst>
+  <CommandAbst xsi:type="ListCommand">
+    <_className>game</_className>
+    <args>game</args>
+  </CommandAbst>
+</ArrayOfCommandAbst>

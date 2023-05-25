@@ -30,7 +30,8 @@ namespace projob_Projekt
                 { "queue print", QueuePrint },
                 { "queue commit", QueueCommit },
                 { "queue dismiss", QueueDismiss },
-                { "queue export", QueueExport }
+                { "queue export", QueueExport },
+                { "queue load", QueueLoad }
             };
 
             AvailableFields = new Dictionary<string, Dictionary<string, object>>
@@ -99,6 +100,14 @@ namespace projob_Projekt
                             Array.Copy(commandTokens, 2, commandArgs, 0, commandArgs.Length);
 
                             commandDictionary["queue export"].Invoke(commandArgs);
+                        }
+                        else if (commandTokens[1].ToLower() == "load")
+                        {
+
+                            string[] commandArgs = new string[commandTokens.Length - 2];
+                            Array.Copy(commandTokens, 2, commandArgs, 0, commandArgs.Length);
+
+                            commandDictionary["queue load"].Invoke(commandArgs);
                         }
                         else
                         {
@@ -256,22 +265,58 @@ namespace projob_Projekt
             Console.WriteLine($"{len} commands cleared");
         }
         private void QueueExport(string[] args)
-        {
-            string fileName = "\"C:\\Users\\sebap\\Documents\\Studia\\sem_4\\Projob\\Projekt\\projob_Projekt\\XML_Files\\DataStuff.xml\"";
+        {                
+            string givenFileName = "default.xml";
+            if (args.Length != 0)
+                givenFileName = args[0];
+            //string fileName = "XMLFiles\\" + givenFileName;
+            string fileName = givenFileName;
+            string path = Path.Combine(Environment.CurrentDirectory, fileName);
 
-            // Use XmlSerializer to serialize and deserialize.
-            XmlSerializer serializer = new XmlSerializer(commands[0].GetType());
-            using (StreamWriter writer = new StreamWriter("C:\\Users\\sebap\\Downloads\\Data.xml"))
+            // Create a new list to hold the commands
+            //List<CommandAbst> commandList = new List<CommandAbst>(commands);
+
+            XmlSerializer serializer = new XmlSerializer(typeof(List<CommandAbst>));
+            using (StreamWriter writer = new StreamWriter(path))
             {
-                serializer.Serialize(writer, commands[0]);
+                serializer.Serialize(writer, commands);
             }
 
-            //commands[0].SerializeItem(fileName, serializer); // Serialize an instance of the class.
+            Console.WriteLine("Done");
+        }
+        private void QueueLoad(string[] args)
+        {
+            string fileName = args[0];
+
+            // Determine the file format based on the file extension
+            string fileExtension = Path.GetExtension(fileName);
+
+            switch (fileExtension)
+            {
+                case ".xml":
+                    LoadCommandsFromXml(fileName);
+                    break;
+                case ".txt":
+                    //LoadCommandsFromPlainText(fileName);
+                    break;
+                default:
+                    Console.WriteLine("Unsupported file format.");
+                    break;
+            }
 
             Console.WriteLine("Done");
         }
 
+        private void LoadCommandsFromXml(string fileName)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(List<CommandAbst>));
 
+            using (StreamReader reader = new StreamReader(fileName))
+            {
+                List<CommandAbst> loadedCommands = (List<CommandAbst>)serializer.Deserialize(reader);
+                commands.AddRange(loadedCommands);
+            }
+        }
     }
 }
 
