@@ -16,7 +16,7 @@ namespace projob_Projekt
     {
         private static Dictionary<string, Action<string[]>> commandDictionary;
         private static Dictionary<string, Dictionary<string, object>> AvailableFields;
-        public GameStore storeMain; // reference to GameStore prepared in main
+        public static GameStore storeMain { get; set; } // reference to GameStore prepared in main
         private List<CommandAbst> commands;
 
         public console(GameStore store)
@@ -42,7 +42,7 @@ namespace projob_Projekt
                 { "review", Review.GetAvailableFields() },
             };
 
-            this.storeMain = store;
+            storeMain = store;
             commands = new List<CommandAbst>();
 
             // Main loop of application is in constructor which is probably not the best solution
@@ -158,7 +158,7 @@ namespace projob_Projekt
             }
 
             Console.WriteLine($"Executing list command for class '{className}'");
-            CommandAbst command = new ListCommand(this.storeMain, className, args); // Arguments here make no sense though
+            CommandAbst command = new ListCommand(storeMain, className, args); // Arguments here make no sense though
             commands.Add(command);
             Console.WriteLine($"List command for {className} added to queue.");
             //storeMain.print(className);
@@ -180,7 +180,7 @@ namespace projob_Projekt
             Array.Copy(args, 1, commandArgs, 0, commandArgs.Length);
 
             Console.WriteLine($"Executing find command for class '{className}'");
-            CommandAbst command = new FindCommand(this.storeMain, className, args);
+            CommandAbst command = new FindCommand(storeMain, className, args);
             commands.Add(command);
             Console.WriteLine("Find command added to command queue");
         }

@@ -13,7 +13,7 @@ namespace projob_Projekt
     public class ListCommand : CommandAbst
     {
         [XmlIgnore]
-        private GameStore _store;
+        private GameStore? _store;
         [XmlElement]
         public string _className;
         [XmlElement]
@@ -27,6 +27,10 @@ namespace projob_Projekt
         public ListCommand() { }
         public override void Execute()
         {
+            if (this._store == null)
+            {
+                _store = console.storeMain;
+            }
             _store.print(_className);
         }
         public override string ToString() // It bothers me that from very beginning there are 2 references to this
@@ -38,7 +42,7 @@ namespace projob_Projekt
     public class AddCommand : CommandAbst
     {
         [XmlIgnore]
-        private GameStore storeMain;
+        private GameStore? storeMain;
         [XmlElement]
         public string className;
         [XmlElement]
@@ -56,6 +60,10 @@ namespace projob_Projekt
 
         public override void Execute()
         {
+            if (storeMain == null)
+            {
+                storeMain = console.storeMain;
+            }
             Console.WriteLine("executing AddCommand");
             // GAME
             if (className == "game" && representation == "base")
@@ -119,7 +127,7 @@ namespace projob_Projekt
         [XmlElement]
         public string[] args { get; set; }
         [XmlIgnore]
-        private GameStore store { get; set; } // nie wiem 
+        private GameStore? store { get; set; } // nie wiem 
         public FindCommand(GameStore store, string className, string[] args)
         {
             _className = className;
@@ -129,6 +137,10 @@ namespace projob_Projekt
         public FindCommand() { } // Parameterless constructor to serialize
         public override void Execute()
         {
+            if (this.store == null)
+            {
+                this.store = console.storeMain;
+            }
             Console.WriteLine("Executing Find Command");
         }
         public override string ToString() 

@@ -18,11 +18,7 @@ EXIT is chosen, it does not modify any value.
 This command allows deleting a given record if requirement conditions (which work the
 same as in the find and edit command) specify one record uniquely.
 
-4. queue dismiss - clears command queue
-
-This command clears all commands which are currently stored in the queue.
-
-5. queue load {filename} – loads commands to the end of the queue from the given file.
+4. queue load {filename} – loads commands to the end of the queue from the given file.
 
 This command loads exported commands saved in a given file to the end of the queue.
 The loaded command should be in the same order as they were during exporting.
