@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using static projob_Projekt.FindCommand;
 
 namespace projob_Projekt
 {
@@ -36,18 +37,18 @@ namespace projob_Projekt
         string nickname { get; }
         List<IGame> ownedGames { get; } // wyrzucilem set 
     }
-    public interface ICommand : ISerializable
+    public interface IFieldComparable
     {
-        void Execute();
-        void SerializeItem(string fileName, XmlSerializer serializer);
-        string ToString();
+        bool IsMatch(string fieldName, ComparisonOperator comparisonOperator, string requirement);
     }
+
     [XmlInclude(typeof(ListCommand))]
     [XmlInclude(typeof(AddCommand))]
     [XmlInclude(typeof(FindCommand))]
-    public abstract class CommandAbst
+    public abstract class CommandAbst //: IFieldComparable
     {
         public abstract void Execute();
-        //public abstract void SerializeItem(string fileName, XmlSerializer serializer);
+        //public abstract bool IsMatch(string fieldName, ComparisonOperator comparisonOperator, string requirement);
     }
+
 }

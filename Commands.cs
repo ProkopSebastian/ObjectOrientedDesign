@@ -114,7 +114,7 @@ namespace projob_Projekt
                 storeMain.AddReview(new AdapterFromReview4(nowa));
             }
         }
-        public override string ToString() 
+        public override string ToString()
         {
             return ($"Add {className}. Arguments: {tab.ToString()}");
         }
@@ -127,23 +127,159 @@ namespace projob_Projekt
         [XmlElement]
         public string[] args { get; set; }
         [XmlIgnore]
-        private GameStore? store { get; set; } // nie wiem 
+        private GameStore? store { get; set; }
         public FindCommand(GameStore store, string className, string[] args)
         {
             _className = className;
-            this.args = args;
+            // argumenty trzeba oczyścić bo zerowy to nazwa klasy którą już zapisujemy w specjalnym do tego polu
+            this._className = args[0];
+            string[] commandArgs = new string[args.Length - 1];
+            Array.Copy(args, 1, commandArgs, 0, commandArgs.Length);
+            this.args = commandArgs;
             this.store = store;
         }
         public FindCommand() { } // Parameterless constructor to serialize
         public override void Execute()
         {
-            if (this.store == null)
+            if (store == null)
             {
-                this.store = console.storeMain;
+                store = console.storeMain;
             }
-            Console.WriteLine("Executing Find Command");
+
+            // Pobranie odpowiedniej tablicy obiektów na podstawie klasy
+            object[] objects = null;
+            switch (_className)
+            {
+                case "game":
+                    objects = store.games;
+                    break;
+                case "mod":
+                    objects = store.mods;
+                    break;
+                case "user":
+                    objects = store.users;
+                    break;
+                case "review":
+                    objects = store.reviews;
+                    break;
+                default:
+                    Console.WriteLine($"Class {_className} is not supported for searching.");
+                    return;
+            }
+
+            // Utworzenie słownika do przechowywania wymagań
+            Dictionary<string, ComparisonRequirement> requirements = new Dictionary<string, ComparisonRequirement>();
+
+            // Przetwarzanie poszczególnych argumentów
+            foreach (string arg in args)
+            {
+                string[] parts = arg.Split(new[] { '=', '>', '<' }, StringSplitOptions.RemoveEmptyEntries);
+                if (parts.Length != 2)
+                {
+                    Console.WriteLine($"Invalid requirement format: {arg}");
+                    return;
+                }
+
+                string fieldName = parts[0];
+                string operatorString = arg.Replace(fieldName, "").Trim();
+                string requirement = parts[1];
+
+                // Sprawdzenie, czy pole istnieje w klasie
+                // ...
+
+
+                // Konwersja operatora na odpowiedni enum ComparisonOperator
+                ComparisonOperator comparisonOperator;
+                switch (operatorString[0])
+                {
+                    case '=':
+                        comparisonOperator = ComparisonOperator.Equal;
+                        break;
+                    case '>':
+                        comparisonOperator = ComparisonOperator.GreaterThan;
+                        break;
+                    case '<':
+                        comparisonOperator = ComparisonOperator.LessThan;
+                        break;
+                    default:
+                        Console.WriteLine($"Invalid operator: {operatorString}");
+                        return;
+                }
+
+                // Dodanie wymagania do słownika requirements
+                requirements[fieldName] = new ComparisonRequirement(fieldName, comparisonOperator, requirement);
+
+            }
+
+            // Implementacja logiki wyszukiwania i wyświetlania pasujących obiektów
+            // ...
+
+            List<object> foundObjects = new List<object>();
+            //bool fit = true;
+            //if (_className == "game")
+            //{
+            //    if (requirements["name"] != null)
+            //    {
+
+            //    }
+            //}
+            //foreach (object obj in objects)
+            //{
+            //    bool satisfiesRequirements = true;
+            //    foreach (var requirement in requirements)
+            //    {
+            //        // Sprawdzenie, czy obiekt spełnia wymaganie
+            //        if (!requirement.Value.IsMatch(obj))
+            //        {
+            //            satisfiesRequirements = false;
+            //            break;
+            //        }
+            //    }
+            //    if (satisfiesRequirements)
+            //    {
+            //        foundObjects.Add(obj);
+            //    }
+            //}
         }
-        public override string ToString() 
+        public enum ComparisonOperator
+        {
+            Equal,
+            GreaterThan,
+            LessThan
+        }
+
+
+        public class ComparisonRequirement
+        {
+            public string FieldName { get; }
+            public ComparisonOperator Operator { get; }
+            public string Value { get; }
+
+            public ComparisonRequirement(string fieldName, ComparisonOperator comparisonOperator, string value)
+            {
+                FieldName = fieldName;
+                Operator = comparisonOperator;
+                Value = value;
+            }
+        }
+
+        private static bool CheckRequirement(object fieldValue, string requirement, string comparisonOperator)
+        {
+            switch (comparisonOperator)
+            {
+                case "=":
+                    return fieldValue.ToString() == requirement;
+                case "<":
+                    return String.Compare(fieldValue.ToString(), requirement) < 0;
+                case ">":
+                    return String.Compare(fieldValue.ToString(), requirement) > 0;
+                default:
+                    Console.WriteLine($"Invalid comparison operator: {comparisonOperator}");
+                    return false;
+            }
+        }
+
+        public override string ToString()
         {
             return ($"Find {_className}. Arguments: {args}");
         }

@@ -54,7 +54,6 @@ namespace projob_Projekt
                 ProcessCommand(command);
             } while (command != "exit");
         }
-        // To do -- which and why should be static
         private static void ProcessCommand(string command)
         {
             string[] commandTokens = Regex.Matches(command, @"[\""].+?[\""]|[^ ]+")
@@ -306,7 +305,6 @@ namespace projob_Projekt
 
             Console.WriteLine("Done");
         }
-
         private void LoadCommandsFromXml(string fileName)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(List<CommandAbst>));
@@ -319,4 +317,3 @@ namespace projob_Projekt
         }
     }
 }
-
