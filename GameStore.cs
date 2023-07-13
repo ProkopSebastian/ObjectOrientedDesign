@@ -196,17 +196,5 @@ namespace projob_Projekt
             games[1] = new AdapterGameFromRep4(g2);            
         }
 
-        //public void print()
-        //{
-        //    foreach (var us in games) { if (us != null) us.wypisz(); }
-        //}
-        //public void list_games()
-        //{
-        //    foreach (var game in games)
-        //    {
-        //        game.wypisz();
-        //    }
-        //}
-
     }
 }

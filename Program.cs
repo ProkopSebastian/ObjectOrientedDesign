@@ -185,3 +185,7 @@ namespace projob_Projekt
 // -- Ująć to co jest teraz w mainie w metode klasy zadanie1, może to być metoda 'działaj' żeby też lamersko w mainie nie siedziało 
 
 // Get enumerator żeby to po ludzku działało 
+
+// Kolejne oddanie:
+// FIND -> a potem DELETE i EDIT opierające się na find
+// EXPORT i LOAD

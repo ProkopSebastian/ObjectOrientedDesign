@@ -1,0 +1,27 @@
+To do:
+
+0. Implement FIND which should have been done earlier
+
+1.	edit <name_of_the_class> [<requirement> …] - edits values of the given record.
+
+This command allows editing a given record if requirement conditions (which work the
+same as in the find command) specify one record uniquely. Editing works the same as
+adding a new element
+	<name_of_field>=<value>
+replace the field's old value with a new one until DONE or EXIT is provided. When 
+EXIT is chosen, it does not modify any value.
+
+2. PRINT - poprawić wypisywanie kolekcji
+
+3. delete <name_of_the_class> [<requirement> …] - removes given record from collections.
+
+This command allows deleting a given record if requirement conditions (which work the
+same as in the find and edit command) specify one record uniquely.
+
+4. queue load {filename} – loads commands to the end of the queue from the given file.
+
+This command loads exported commands saved in a given file to the end of the queue.
+The loaded command should be in the same order as they were during exporting.
+Both file formats are supported: XML and plain-text.
+
+NOTE: All features from previous parts should still work.
